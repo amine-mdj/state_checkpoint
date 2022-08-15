@@ -1,25 +1,63 @@
-import logo from './logo.svg';
+import React from 'react'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+
+    class App extends React.Component {
+      constructor() {
+        super();
+        this.state = {show: "false",
+                      time: 0 ,
+
+      };
+      }
+
+      componentDidMount() {
+        this.timerID = setInterval(
+          () => this.tick(),
+          1000
+        );
+      }
+    
+      componentWillUnmount() {
+        clearInterval(this.timerID);  // doesn't work
+      }
+    
+      tick() {
+        this.setState({
+          time: this.state.time + 1 
+        });
+      }
+
+      toggleShow = () => {
+        this.setState({show: !this.state.show});
+      }      
+      
+
+      render() {
+        let shown ;
+      if (this.state.show){
+        shown = (<div >
+        <h2>Amine Medjdoub</h2>
+        <p>full stack develloper</p>
+        <img src='myimage.jpeg' alt='profile image' />
+      </div>);
+        }
+      else {
+        shown = (<div></div>);
+      }
+      return (
+            <div className="my_bucket">
+              <p>the component was mounted since : {this.state.time} s</p>
+            <button onClick={this.toggleShow} >Show/hide</button>
+            {shown}
+            </div>
+    
+      )
+        
+        
+        
+      }
+    }
+  
 
 export default App;
